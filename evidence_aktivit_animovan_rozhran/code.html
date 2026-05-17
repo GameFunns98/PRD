@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="cs"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShiftFlow Pro - Prodeje a Aktivity</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700;900&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        @keyframes pop-in {
+            0% { transform: scale(0.95); background-color: rgba(192, 193, 255, 0.1); }
+            50% { transform: scale(1.02); background-color: rgba(192, 193, 255, 0.05); }
+            100% { transform: scale(1); background-color: transparent; }
+        }
+        .animate-pop-in {
+            animation: pop-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#131b2e",
+                        "surface": "#0b1326",
+                        "on-secondary": "#00344d",
+                        "secondary-fixed": "#c9e6ff",
+                        "secondary": "#89ceff",
+                        "on-error-container": "#ffdad6",
+                        "on-error": "#690005",
+                        "surface-container": "#171f33",
+                        "inverse-on-surface": "#283044",
+                        "outline-variant": "#464554",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "tertiary-fixed-dim": "#ffb783",
+                        "on-tertiary-container": "#452000",
+                        "inverse-surface": "#dae2fd",
+                        "primary-fixed": "#e1e0ff",
+                        "on-secondary-fixed-variant": "#004c6e",
+                        "on-secondary-container": "#00344e",
+                        "background": "#0b1326",
+                        "surface-variant": "#2d3449",
+                        "on-background": "#dae2fd",
+                        "surface-dim": "#0b1326",
+                        "secondary-container": "#00a2e6",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "on-tertiary-fixed": "#301400",
+                        "on-primary-fixed": "#07006c",
+                        "surface-container-lowest": "#060e20",
+                        "primary": "#c0c1ff",
+                        "on-primary": "#1000a9",
+                        "inverse-primary": "#494bd6",
+                        "outline": "#908fa0",
+                        "error-container": "#93000a",
+                        "on-primary-container": "#0d0096",
+                        "tertiary-fixed": "#ffdcc5",
+                        "surface-tint": "#c0c1ff",
+                        "on-surface": "#dae2fd",
+                        "tertiary": "#ffb783",
+                        "on-tertiary": "#4f2500",
+                        "tertiary-container": "#d97721",
+                        "primary-container": "#8083ff",
+                        "on-secondary-fixed": "#001e2f",
+                        "on-surface-variant": "#c7c4d7",
+                        "secondary-fixed-dim": "#89ceff",
+                        "error": "#ffb4ab",
+                        "surface-container-high": "#222a3d",
+                        "surface-container-highest": "#2d3449",
+                        "on-tertiary-fixed-variant": "#703700",
+                        "surface-bright": "#31394d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "32px",
+                        "unit": "4px",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Geist"],
+                        "display": ["Geist"],
+                        "mono-data": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Geist"],
+                        "body-sm": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "body-lg": ["Geist"],
+                        "title-md": ["Geist"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "display": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "mono-data": ["13px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "title-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background antialiased min-h-screen flex selection:bg-primary/30 selection:text-primary">
+<nav class="hidden md:flex flex-col h-screen fixed left-0 top-0 py-gutter w-64 border-r border-outline-variant bg-surface-container-low z-50">
+<div class="px-gutter mb-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">widgets</span>
+</div>
+<div>
+<h1 class="font-headline-lg text-[20px] font-black text-primary leading-tight">ShiftFlow Pro</h1>
+<p class="font-label-caps text-label-caps text-on-surface-variant">Systém správy</p>
+</div>
+</div>
+<div class="px-gutter mb-6">
+<button class="w-full bg-primary text-on-primary font-title-md text-[14px] py-2 px-4 rounded flex items-center justify-center gap-2 hover:bg-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                Nová aktivita
+            </button>
+</div>
+<div class="flex-1 flex flex-col gap-1 px-3">
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-container-high transition-colors font-body-lg text-body-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Přehled
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-primary border-r-2 border-primary bg-primary/10 transition-transform translate-x-1 font-body-lg text-body-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">payments</span>
+                Prodeje/Aktivity
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-container-high transition-colors font-body-lg text-body-lg" href="#">
+<span class="material-symbols-outlined">history</span>
+                Historie
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-container-high transition-colors font-body-lg text-body-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Nastavení
+            </a>
+</div>
+<div class="mt-auto flex flex-col gap-1 px-3">
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-container-high transition-colors font-body-lg text-body-lg" href="#">
+<span class="material-symbols-outlined">help</span>
+                Nápověda
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:bg-surface-container-high transition-colors font-body-lg text-body-lg" href="#">
+<span class="material-symbols-outlined">logout</span>
+                Odhlásit se
+            </a>
+</div>
+</nav>
+<main class="flex-1 flex flex-col md:ml-64 min-h-screen">
+<header class="h-16 border-b border-outline-variant bg-surface-container flex justify-between items-center px-margin-desktop w-full shrink-0">
+<h2 class="font-title-md text-title-md text-on-surface">Prodejní terminál</h2>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<span class="font-mono-data text-mono-data">Otevřená směna: 08:00 - 16:00</span>
+<div class="w-px h-6 bg-outline-variant"></div>
+<button class="hover:text-primary transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<div class="flex-1 p-gutter grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start overflow-hidden">
+<section class="lg:col-span-5 h-full flex flex-col bg-surface-container rounded border border-outline-variant overflow-hidden">
+<div class="p-4 border-b border-outline-variant flex items-center gap-3 bg-surface-container-high">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full bg-surface border border-outline-variant rounded py-2 pl-10 pr-4 text-on-surface focus:border-primary focus:ring-1 focus:ring-primary font-body-sm text-body-sm outline-none transition-all placeholder:text-on-surface-variant" placeholder="Vyhledat položku..." type="text"/>
+</div>
+<button class="p-2 border border-outline-variant rounded text-on-surface-variant hover:bg-surface hover:text-primary transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+</button>
+</div>
+<div class="flex gap-2 p-3 border-b border-outline-variant overflow-x-auto no-scrollbar">
+<button class="px-4 py-1.5 rounded-full bg-primary text-on-primary font-label-caps text-label-caps whitespace-nowrap transform scale-105 shadow-md transition-all duration-200">Vše</button>
+<button class="px-4 py-1.5 rounded-full border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary font-label-caps text-label-caps whitespace-nowrap transition-all duration-200 hover:scale-105 active:scale-95">Zásahy a Převoz</button>
+<button class="px-4 py-1.5 rounded-full border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary font-label-caps text-label-caps whitespace-nowrap transition-all duration-200 hover:scale-105 active:scale-95">Diagnostika</button>
+<button class="px-4 py-1.5 rounded-full border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary font-label-caps text-label-caps whitespace-nowrap transition-all duration-200 hover:scale-105 active:scale-95">Zdravotní úkony</button>
+</div>
+<div class="flex-1 overflow-y-auto p-3 grid grid-cols-2 sm:grid-cols-3 gap-3">
+<button class="flex flex-col items-start p-3 bg-surface border border-outline-variant rounded hover:border-primary hover:bg-surface-container-high hover:-translate-y-1 hover:shadow-lg transition-all duration-200 text-left relative group">
+<span class="font-body-sm text-body-sm text-on-surface font-semibold mb-1">Espresso</span>
+<span class="font-mono-data text-mono-data text-primary mt-auto">55 Kč</span>
+<div class="absolute inset-0 border border-primary rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+</button>
+<button class="flex flex-col items-start p-3 bg-surface border border-outline-variant rounded hover:border-primary hover:bg-surface-container-high hover:-translate-y-1 hover:shadow-lg transition-all duration-200 text-left relative group">
+<span class="font-body-sm text-body-sm text-on-surface font-semibold mb-1">Cappuccino</span>
+<span class="font-mono-data text-mono-data text-primary mt-auto">75 Kč</span>
+</button>
+<button class="flex flex-col items-start p-3 bg-surface border border-outline-variant rounded hover:border-primary hover:bg-surface-container-high hover:-translate-y-1 hover:shadow-lg transition-all duration-200 text-left relative group">
+<span class="font-body-sm text-body-sm text-on-surface font-semibold mb-1">Filtrovaná Káva</span>
+<span class="font-mono-data text-mono-data text-primary mt-auto">65 Kč</span>
+</button>
+<button class="flex flex-col items-start p-3 bg-surface border border-outline-variant rounded hover:border-primary hover:bg-surface-container-high hover:-translate-y-1 hover:shadow-lg transition-all duration-200 text-left relative group">
+<span class="font-body-sm text-body-sm text-on-surface font-semibold mb-1">Sendvič Šunka</span>
+<span class="font-mono-data text-mono-data text-primary mt-auto">95 Kč</span>
+</button>
+<button class="flex flex-col items-start p-3 bg-surface border border-outline-variant rounded hover:border-primary hover:bg-surface-container-high hover:-translate-y-1 hover:shadow-lg transition-all duration-200 text-left relative group">
+<span class="font-body-sm text-body-sm text-on-surface font-semibold mb-1">Sendvič Sýr</span>
+<span class="font-mono-data text-mono-data text-primary mt-auto">85 Kč</span>
+</button>
+<button class="flex flex-col items-start p-3 bg-surface border border-outline-variant rounded border-dashed hover:border-primary hover:bg-surface-container-high hover:-translate-y-1 hover:shadow-lg transition-all duration-200 text-left relative group">
+<span class="font-body-sm text-body-sm text-on-surface font-semibold mb-1">Ošetření rány</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1">Zdravotní</span>
+<span class="font-mono-data text-mono-data text-primary mt-auto">250 Kč</span>
+</button>
+<button class="flex flex-col items-start p-3 bg-surface border border-outline-variant rounded border-dashed hover:border-primary hover:bg-surface-container-high hover:-translate-y-1 hover:shadow-lg transition-all duration-200 text-left relative group">
+<span class="font-body-sm text-body-sm text-on-surface font-semibold mb-1">Konzultace</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1">Služba</span>
+<span class="font-mono-data text-mono-data text-primary mt-auto">500 Kč</span>
+</button>
+</div>
+</section>
+<section class="lg:col-span-4 h-full flex flex-col bg-surface border border-outline-variant rounded overflow-hidden">
+<div class="p-4 border-b border-outline-variant bg-surface-container flex justify-between items-center">
+<h3 class="font-title-md text-title-md text-on-surface">Aktuální objednávka</h3>
+<span class="font-label-caps text-label-caps px-2 py-1 bg-surface-variant text-on-surface-variant rounded">#1042</span>
+</div>
+<div class="flex-1 overflow-y-auto p-4 flex flex-col gap-3">
+<div class="flex items-center gap-3 border-b border-outline-variant pb-3 animate-pop-in">
+<div class="flex-1">
+<h4 class="font-body-lg text-body-lg text-on-surface font-semibold">Cappuccino</h4>
+<span class="font-mono-data text-mono-data text-on-surface-variant">75 Kč / ks</span>
+</div>
+<div class="flex items-center gap-2 bg-surface-container rounded border border-outline-variant px-1">
+<button class="w-8 h-8 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-[18px]">remove</span></button>
+<span class="font-mono-data text-mono-data w-6 text-center">2</span>
+<button class="w-8 h-8 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-[18px]">add</span></button>
+</div>
+<div class="w-16 text-right font-mono-data text-mono-data font-semibold text-on-surface">150 Kč</div>
+</div>
+<div class="flex items-center gap-3 border-b border-outline-variant pb-3 animate-pop-in" style="animation-delay: 0.1s">
+<div class="flex-1">
+<h4 class="font-body-lg text-body-lg text-on-surface font-semibold">Sendvič Šunka</h4>
+<span class="font-mono-data text-mono-data text-on-surface-variant">95 Kč / ks</span>
+</div>
+<div class="flex items-center gap-2 bg-surface-container rounded border border-outline-variant px-1">
+<button class="w-8 h-8 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-[18px]">remove</span></button>
+<span class="font-mono-data text-mono-data w-6 text-center">1</span>
+<button class="w-8 h-8 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-[18px]">add</span></button>
+</div>
+<div class="w-16 text-right font-mono-data text-mono-data font-semibold text-on-surface">95 Kč</div>
+</div>
+</div>
+<div class="p-4 bg-surface-container border-t border-outline-variant flex flex-col gap-4">
+<div class="flex justify-between items-center text-on-surface-variant font-body-sm text-body-sm">
+<span>Mezisoučet</span>
+<span class="font-mono-data text-mono-data transition-all duration-300">245 Kč</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant font-body-sm text-body-sm">
+<span>DPH (21%)</span>
+<span class="font-mono-data text-mono-data transition-all duration-300">51.45 Kč</span>
+</div>
+<div class="flex justify-between items-center border-t border-dashed border-outline-variant pt-3">
+<span class="font-title-md text-title-md text-on-surface">Celkem k úhradě</span>
+<span class="font-headline-lg text-headline-lg font-black text-primary font-mono-data transition-all duration-300">296 Kč</span>
+</div>
+<div class="grid grid-cols-2 gap-3 mt-2">
+<button class="py-3 px-4 rounded border border-outline-variant text-on-surface hover:bg-surface-variant hover:border-error hover:text-error active:scale-95 transition-all duration-200 font-body-lg text-body-lg font-semibold flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">delete_sweep</span>
+                            Vymazat
+                        </button>
+<button class="py-3 px-4 rounded bg-primary text-on-primary hover:bg-primary-fixed hover:-translate-y-0.5 hover:shadow-[0_4px_20px_rgba(192,193,255,0.25)] active:scale-95 active:translate-y-0 transition-all duration-200 font-body-lg text-body-lg font-semibold flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(192,193,255,0.1)]">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+                            Uložit
+                        </button>
+</div>
+</div>
+</section>
+<section class="lg:col-span-3 flex flex-col gap-4 h-full">
+<div class="bg-surface-container rounded border border-outline-variant p-4">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">monitoring</span>
+                        Statistiky Směny
+                    </h3>
+<div class="flex flex-col gap-4">
+<div>
+<span class="font-body-sm text-body-sm text-on-surface-variant block mb-1">Dnešní tržba</span>
+<div class="flex items-end gap-2">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface font-mono-data">14,250</span>
+<span class="font-mono-data text-mono-data text-primary mb-1">Kč</span>
+</div>
+</div>
+<div class="h-px w-full bg-outline-variant"></div>
+<div>
+<span class="font-body-sm text-body-sm text-on-surface-variant block mb-1">Obslouženo zákazníků</span>
+<div class="flex items-center gap-2">
+<span class="font-title-md text-title-md text-on-surface font-mono-data">48</span>
+<div class="px-2 py-0.5 rounded bg-surface-variant text-on-surface-variant font-mono-data text-[11px] flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] text-tertiary">trending_up</span> +12%
+                                </div>
+</div>
+</div>
+<div class="h-px w-full bg-outline-variant"></div>
+<div>
+<span class="font-body-sm text-body-sm text-on-surface-variant block mb-1">Průměrná útrata</span>
+<div class="flex items-end gap-2">
+<span class="font-title-md text-title-md text-on-surface font-mono-data">296</span>
+<span class="font-mono-data text-mono-data text-on-surface-variant mb-1">Kč / obj.</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container rounded border border-outline-variant p-4 mt-auto">
+<div class="flex items-center justify-between mb-3">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Rychlé Akce</span>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<button class="p-2 border border-outline-variant rounded flex flex-col items-center justify-center gap-1 hover:border-primary hover:text-primary text-on-surface-variant transition-colors bg-surface">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-body-sm text-body-sm text-[12px]">Tisk účtu</span>
+</button>
+<button class="p-2 border border-outline-variant rounded flex flex-col items-center justify-center gap-1 hover:border-primary hover:text-primary text-on-surface-variant transition-colors bg-surface">
+<span class="material-symbols-outlined">point_of_sale</span>
+<span class="font-body-sm text-body-sm text-[12px]">Zásuvka</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+</body></html>
