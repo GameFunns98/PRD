@@ -1,0 +1,2 @@
+import { prisma } from '@/lib/prisma';import { importRowSchema } from '@/schemas';import { toSlug } from '@/lib/slug';
+export async function POST(req:Request){const body=await req.json(); const rows=(body.rows as unknown[]).map(r=>importRowSchema.parse(r)); const result=[] as any[]; for(const row of rows){const slug=toSlug(row.name); const item=await prisma.priceItem.upsert({where:{slug},update:{name:row.name,price:row.price,category:row.category},create:{...row,slug}}); result.push(item);} return Response.json({count:result.length,items:result});}

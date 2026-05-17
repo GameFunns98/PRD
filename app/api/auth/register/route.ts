@@ -1,0 +1,2 @@
+import { registerSchema } from '@/schemas';import { prisma } from '@/lib/prisma';import bcrypt from 'bcryptjs';
+export async function POST(req:Request){const body=registerSchema.parse(await req.json()); const exists=await prisma.user.findUnique({where:{email:body.email}}); if(exists) return Response.json({error:'Email exists'},{status:409}); const user=await prisma.user.create({data:{email:body.email,name:body.name,passwordHash:await bcrypt.hash(body.password,10)}}); return Response.json({id:user.id});}

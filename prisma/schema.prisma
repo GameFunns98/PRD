@@ -1,0 +1,21 @@
+generator client { provider = "prisma-client-js" }
+datasource db { provider = "postgresql" url = env("DATABASE_URL") }
+
+enum Role { ADMIN SUPERVISOR USER }
+model User {
+  id String @id @default(cuid())
+  email String @unique
+  name String?
+  passwordHash String
+  role Role @default(USER)
+  shifts Shift[]
+  orders Order[]
+  createdAt DateTime @default(now())
+}
+model Shift { id String @id @default(cuid()) userId String startAt DateTime @default(now()) endAt DateTime? active Boolean @default(true) durationSec Int? user User @relation(fields:[userId],references:[id]) orders Order[] }
+model PriceItem { id String @id @default(cuid()) name String slug String @unique price Int category String metadata Json? orderItems OrderItem[] menuItems MenuItem[] createdAt DateTime @default(now()) }
+model Menu { id String @id @default(cuid()) name String usageCount Int @default(0) items MenuItem[] createdAt DateTime @default(now()) }
+model MenuItem { id String @id @default(cuid()) menuId String priceItemId String qty Int @default(1) menu Menu @relation(fields:[menuId],references:[id]) priceItem PriceItem @relation(fields:[priceItemId],references:[id]) }
+model Order { id String @id @default(cuid()) customer String shiftId String? userId String total Int orderAt DateTime @default(now()) shift Shift? @relation(fields:[shiftId],references:[id]) user User @relation(fields:[userId],references:[id]) items OrderItem[] }
+model OrderItem { id String @id @default(cuid()) orderId String priceItemId String qty Int price Int order Order @relation(fields:[orderId],references:[id]) priceItem PriceItem @relation(fields:[priceItemId],references:[id]) }
+model ReportTemplate { id String @id @default(cuid()) name String body String createdAt DateTime @default(now()) }
