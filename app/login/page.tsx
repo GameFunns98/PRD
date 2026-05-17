@@ -1,0 +1,2 @@
+import { signIn } from '@/lib/auth';
+export default function Login(){return <form action={async (f:FormData)=>{'use server'; await signIn('credentials',{email:f.get('email'),password:f.get('password'),redirectTo:'/dashboard'})}} className='card space-y-2'><h1>Login</h1><input name='email' placeholder='email' className='w-full p-2 text-black'/><input name='password' type='password' placeholder='password' className='w-full p-2 text-black'/><button className='btn'>Přihlásit</button></form>}

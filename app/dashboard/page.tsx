@@ -1,0 +1,3 @@
+import Nav from '@/components/nav';
+import { prisma } from '@/lib/prisma';
+export default async function Dashboard(){const orders=await prisma.order.count(); const profit=(await prisma.order.aggregate({_sum:{total:true}}))._sum.total??0; const active=await prisma.shift.count({where:{active:true}}); return <main className='space-y-4'><Nav/><section className='grid grid-cols-2 gap-3'><div className='card'><p>Objednávky</p><h2 className='text-2xl'>{orders}</h2></div><div className='card'><p>Profit</p><h2 className='text-2xl'>{profit}</h2></div><div className='card'><p>Aktivní směny</p><h2 className='text-2xl'>{active}</h2></div></section></main>}

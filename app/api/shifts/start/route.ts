@@ -1,0 +1,2 @@
+import { auth } from '@/lib/auth';import { prisma } from '@/lib/prisma';
+export async function POST(){const s=await auth(); if(!s?.user?.email) return Response.json({error:'Unauthorized'},{status:401}); const user=await prisma.user.findUnique({where:{email:s.user.email}}); if(!user) return Response.json({error:'Unauthorized'},{status:401}); const shift=await prisma.shift.create({data:{userId:user.id}}); return Response.json(shift);}

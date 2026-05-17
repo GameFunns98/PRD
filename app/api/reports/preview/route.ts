@@ -1,0 +1,1 @@
+export async function POST(req:Request){const {template,values}=await req.json(); const missing=(template.match(/\{([^}]+)\}/g)||[]).map((x:string)=>x.slice(1,-1)).filter((k:string)=>!(k in values)); const preview=template.replace(/\{([^}]+)\}/g,(_:string,k:string)=>String(values[k]??`{${k}}`)); return Response.json({preview,missing});}
